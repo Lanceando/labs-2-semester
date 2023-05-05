@@ -1,0 +1,8 @@
+ElectricityMeter Merkuriy230
+HeatingControlBlock OvenS203
+DiscreteInputBlock ReallabNL16HV
+DiscreteInputBlock PriborelectroPRE-16HV
+DiscreteInputBlock EnergoserviceENMV-1-24
+HeatingControlBlock OumanS203
+ElectricityMeter NevaMT314
+ElectricityMeter EnergomeraCE308
