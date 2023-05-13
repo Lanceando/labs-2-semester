@@ -8,12 +8,18 @@ private:
 	char* m_str;
 
 public:
-	String() = default;
+	String(): m_size(0), m_str(nullptr) {}
 
 	String(const String& other) {
-		m_size = other.m_size;
-		m_str = new char[m_size + 1];
-		strcpy_s(m_str, m_size + 1, other.m_str);
+		if (other.m_str == nullptr) {
+			m_str = nullptr;
+			m_size = 0;
+		}
+		else {
+			m_size = other.m_size;
+			m_str = new char[m_size + 1];
+			strcpy_s(m_str, m_size + 1, other.m_str);
+		}
 	}
 
 	String& operator=(const String& other) {
@@ -40,7 +46,7 @@ public:
 	String& operator +=(const String& other) {
 		char* temp = new char[m_size + other.m_size + 1];
 		strcpy_s(temp, m_size + other.m_size + 1, m_str);
-		strcat_s(temp, other.m_size + 1, other.m_str);
+		strcat_s(temp, m_size + other.m_size + 1, other.m_str);
 		delete[] m_str;
 		m_str = temp;
 		m_size = m_size + other.m_size;
@@ -109,7 +115,7 @@ int main()
 {
 	String s1;
 	String s2;
-	//String s3;
+	String s3;
 
 	std::cin >> s1;
 
@@ -117,11 +123,10 @@ int main()
 
 	//std::cout << s1 << std::endl;
 	//std::cout << s2 << std::endl;
-	//s3 = s1 + s2;
-	//std::cout << s3 << std::endl;
+	s3 = s1 + s2;
+	std::cout << s3 << std::endl;
 
 	s1 += s2;
 	std::cout << s1 << std::endl;
-	s1.at(0) = 'G';
-	std::cout << s1 << std::endl;
+	
 }
