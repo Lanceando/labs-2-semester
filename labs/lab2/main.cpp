@@ -32,14 +32,14 @@ public:
 		String result;
 		result.m_size = m_size + other.m_size;
 		result.m_str = new char[result.m_size + 1];
-		strcpy_s(result.m_str, m_size, m_str);
+		strcpy_s(result.m_str, m_size + 1, m_str);
 		strcat_s(result.m_str, other.m_size + 1, other.m_str);
 		return result;
 	}
 
 	String& operator +=(const String& other) {
 		char* temp = new char[m_size + other.m_size + 1];
-		strcpy_s(temp, m_size + 1, m_str);
+		strcpy_s(temp, m_size + other.m_size + 1, m_str);
 		strcat_s(temp, other.m_size + 1, other.m_str);
 		delete[] m_str;
 		m_str = temp;
@@ -97,8 +97,10 @@ public:
 	}
 
 	char& at(int i) {
-		if ((i >= 0) && (i < m_size))
+		if ((i >= 0) && (i < m_size)){
 			return m_str[i];
+		}
+		return m_str[0];
 	}
 };
 
