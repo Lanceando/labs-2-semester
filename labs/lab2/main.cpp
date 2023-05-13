@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-
+#include <string>
 
 class String {
 private:
@@ -32,7 +32,7 @@ public:
 		String result;
 		result.m_size = m_size + other.m_size;
 		result.m_str = new char[result.m_size + 1];
-		strcpy_s(result.m_str, result.m_size + 1, m_str);
+		strcpy_s(result.m_str, m_size, m_str);
 		strcat_s(result.m_str, other.m_size + 1, other.m_str);
 		return result;
 	}
@@ -107,21 +107,19 @@ int main()
 {
 	String s1;
 	String s2;
-	String s3;
+	//String s3;
 
 	std::cin >> s1;
 
 	std::cin >> s2;
 
-	std::cout << s1 << std::endl;
-	std::cout << s2 << std::endl;
-	s3 = s1 + s2;
-	std::cout << s3 << std::endl;
+	//std::cout << s1 << std::endl;
+	//std::cout << s2 << std::endl;
+	//s3 = s1 + s2;
+	//std::cout << s3 << std::endl;
 
 	s1 += s2;
-	std::cout << s1[0] << std::endl;
+	std::cout << s1 << std::endl;
 	s1.at(0) = 'G';
 	std::cout << s1 << std::endl;
-
-
 }
