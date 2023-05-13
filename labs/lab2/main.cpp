@@ -38,8 +38,8 @@ public:
 		String result;
 		result.m_size = m_size + other.m_size;
 		result.m_str = new char[result.m_size + 1];
-		strcpy_s(result.m_str, m_size + 1, m_str);
-		strcat_s(result.m_str, other.m_size + 1, other.m_str);
+		strcpy_s(result.m_str, result.m_size + 1, m_str);
+		strcat_s(result.m_str, result.m_size + 1, other.m_str);
 		return result;
 	}
 
