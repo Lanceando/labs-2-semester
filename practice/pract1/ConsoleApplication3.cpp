@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -28,7 +28,7 @@ private:
 				temp += text[i];
 				splitedText.push_back(temp);
 			}
-			temp += text[i];	
+			temp += text[i];
 		}
 	}
 
@@ -45,7 +45,7 @@ public:
 		m_text = text;
 	}
 
-	~Fibo(){}
+	~Fibo() {}
 
 	std::string Encode(std::vector<int>& key) {
 		splitText(m_text);
@@ -55,12 +55,17 @@ public:
 		return m_encode_text;
 	}
 
-	std::string Decode(std::vector<int>& key){
+	std::string Decode(std::vector<int>& key) {
 		splitedText.clear();
 		splitText(m_encode_text);
-
-		for (int i : key) {
-			m_decode_text += splitedText[fibo_index(i)] + ' ';
+		
+		std::vector<std::string> temp(splitedText);
+		for (int i = 0; i < key.size(); i++) {
+			splitedText[fibo_index(key[i])] = temp[i];
+		}
+		
+		for (auto word : splitedText) {
+			m_decode_text += word + ' ';
 		}
 		return m_decode_text;
 	}
@@ -71,7 +76,7 @@ public:
 int main()
 {
 	std::string text = "Hello, my name is Ivan.";
-	std::vector<int> key{2,8,5,1,3 };
+	std::vector<int> key{ 5,8,2,1,3 };
 
 	Fibo str(text);
 
@@ -84,6 +89,5 @@ int main()
 
 
 }
-
 
 
