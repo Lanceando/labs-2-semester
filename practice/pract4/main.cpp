@@ -1,77 +1,105 @@
-﻿#include <iostream>
-#include <vector>
-#include <string>
+#include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
+
 
 
 
 class Device {
 private:
     std::string m_name;
-    std::string m_type;
-
 public:
+    Device() = default;
 
-    Device(const std::string& type, const std::string& name) : m_name(name), m_type(type) {}
+    virtual void poll() = 0;
+    virtual ~Device() = default;
 
-    virtual void poll() {
-        std::cout << m_type << " " << m_name << ": Какие-то данные" << std::endl;
-        // Некоторая реализация 
-    }
 };
 
-class  ElectricityMeter: public Device {
+class ElectricityMeter : public Device {
+private:
+    std::string type = "Electricity Meter";
+    std::string m_name;
+
 public:
-    ElectricityMeter(const std::string& type, const std::string& name): Device(type, name) {}
+    explicit ElectricityMeter(const std::string &name) : m_name(name) {}
+
+    void poll() override {
+
+        std::cout << type + ": " << m_name  << std::endl;
+    }
+
+    ~ElectricityMeter() override = default;
 
 };
 
 class DiscreteInputBlock : public Device {
+private:
+    std::string m_name;
+    std::string type = "DiscreteInputBlock";
 
 public:
-    DiscreteInputBlock(const std::string& type, const std::string& name): Device(type, name) {}
+    explicit DiscreteInputBlock(const std::string &name) : m_name(name) {}
+
+    void poll() override {
+
+        std::cout << type + ": " << m_name  << std::endl;
+    }
+
+    ~DiscreteInputBlock() override = default;
 };
 
 class HeatingControlBlock : public Device {
+private:
+    std::string m_name;
+    std::string type = "HeatingControlBlock";
 
 public:
-    HeatingControlBlock(const std::string& type, const std::string& name): Device(type, name) {}
-};
+    explicit HeatingControlBlock(const std::string &name) : m_name(name) {}
+    void poll() override {
 
+        std::cout << type + ": " << m_name  << std::endl;
+    }
+
+
+
+    ~HeatingControlBlock() override = default;
+};
 
 int main()
 {
     setlocale(LC_ALL, "ru");
-    std::ifstream input("devices.txt");
+    std::ifstream input("../devices.txt");
 
     if (!input.is_open()) {
         std::cout << "Failed to open devices file" << std::endl;
     }
-    
+
     std::vector<Device*> devices;
 
     std::string deviceType, deviceName;
     while (input >> deviceType >> deviceName) {
         if (deviceType == "ElectricityMeter") {
-            devices.push_back(new ElectricityMeter(deviceType, deviceName));
+            devices.push_back(new ElectricityMeter(deviceName));
         }
         else if (deviceType == "DiscreteInputBlock") {
-            devices.push_back(new DiscreteInputBlock(deviceType, deviceName));
+            devices.push_back(new DiscreteInputBlock(deviceName));
         }
         else if (deviceType == "HeatingControlBlock") {
-            devices.push_back(new HeatingControlBlock(deviceType, deviceName));
+            devices.push_back(new HeatingControlBlock(deviceName));
         }
         else {
             std::cout << "Error. Unknow device type" << deviceType << std::endl;
         }
     }
+    input.close();
 
     for (auto device : devices) {
         device->poll();
     }
-
     for (auto device : devices) {
         delete device;
     }
 
-}
+};
